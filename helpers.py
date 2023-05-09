@@ -1,4 +1,4 @@
-# https://github.com/spro/char-rnn.pytorch
+# https://github.com/michelepapucci/char-rnn.pytorch/
 
 import unidecode
 import string

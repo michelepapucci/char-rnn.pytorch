@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# https://github.com/spro/char-rnn.pytorch
+# https://github.com/michelepapucci/char-rnn.pytorch/
 
 import torch
 import os
@@ -8,7 +8,7 @@ import argparse
 from helpers import *
 from model import *
 
-def generate(decoder, prime_str='A', predict_len=100, temperature=0.8, cuda=False):
+def generate(decoder, prime_str='A', predict_len=100, temperature=0.8, stop_char="\n", cuda=False):
     hidden = decoder.init_hidden(1)
     prime_input = Variable(char_tensor(prime_str).unsqueeze(0))
 
@@ -32,6 +32,8 @@ def generate(decoder, prime_str='A', predict_len=100, temperature=0.8, cuda=Fals
 
         # Add predicted character to string and use as next input
         predicted_char = all_characters[top_i]
+        if predicted_char == stop_char:
+            return predicted
         predicted += predicted_char
         inp = Variable(char_tensor(predicted_char).unsqueeze(0))
         if cuda:
