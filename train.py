@@ -34,6 +34,7 @@ def random_training_set(chunk_len, batch_size, file, file_len, use_cuda = False)
 def train(inp, target, criterion, decoder, decoder_optimizer, batch_size, chunk_len, use_cuda=False):
     hidden = decoder.init_hidden(batch_size)
     if use_cuda:
+        print(type(hidden))
         hidden = hidden.cuda()
     decoder.zero_grad()
     loss = 0
@@ -59,10 +60,10 @@ def main():
     batch_size = 500
     chunk_len = 50
     hidden_size = 200
-    model = 'gru'
+    model = 'lstm'
     n_layers = 4
     learning_rate = 0.01
-    n_epochs = 3000
+    n_epochs = 3000 # TODO provare ad aumentare? 
     print_every = 100
 
     file, file_len = read_file(filepath)
