@@ -16,7 +16,7 @@ def generate(decoder, prime_str='A', predict_len=100, temperature=0.8, stop_char
         for h in hidden:
             hidden = tuple(h.cuda() for h in hidden)
         prime_input = prime_input.cuda()
-        
+
     predicted = prime_str
 
     # Use priming string to "build up" hidden state
@@ -38,7 +38,7 @@ def generate(decoder, prime_str='A', predict_len=100, temperature=0.8, stop_char
             return predicted
         predicted += predicted_char
         inp = Variable(char_tensor(predicted_char).unsqueeze(0))
-        if cuda:
+        if use_cuda:
             inp = inp.cuda()
 
     return predicted
