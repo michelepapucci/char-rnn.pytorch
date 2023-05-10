@@ -34,8 +34,8 @@ def random_training_set(chunk_len, batch_size, file, file_len, use_cuda = False)
 def train(inp, target, criterion, decoder, decoder_optimizer, batch_size, chunk_len, use_cuda=False):
     hidden = decoder.init_hidden(batch_size)
     if use_cuda:
-        print(type(hidden))
-        hidden = hidden.cuda()
+        for h in hidden:
+            hidden = tuple(h.cuda() for h in hidden)
     decoder.zero_grad()
     loss = 0
 
