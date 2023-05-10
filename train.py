@@ -48,8 +48,7 @@ def train(inp, target, criterion, decoder, decoder_optimizer, batch_size, chunk_
 
     return loss.item() / chunk_len
 
-def save(decoder):
-    save_filename = 'model.pt'
+def save(decoder, save_filename = 'model.pt'):
     torch.save(decoder, save_filename)
     print('Saved as %s' % save_filename)
 
