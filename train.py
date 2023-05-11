@@ -32,10 +32,13 @@ def random_training_set(chunk_len, batch_size, file, file_len, use_cuda = False)
     return inp, target
 
 def train(inp, target, criterion, decoder, decoder_optimizer, batch_size, chunk_len, use_cuda=False):
-    hidden = decoder.init_hidden(batch_size)
-    if use_cuda:
-        for h in hidden:
-            hidden = tuple(h.cuda() for h in hidden)
+    if decoder.model == 'lstm':
+        hidden = decoder.init_hidden(batch_size)
+        if use_cuda:
+            hidden = (hidden[0].cuda(), hidden[1].cuda())
+    else:  # gru
+        hidden = decoder.init_hidden(batch_size).cuda() if use_cuda else decoder.init_hidden(batch_size)
+
     decoder.zero_grad()
     loss = 0
 
